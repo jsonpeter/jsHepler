@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Helper--demo</title>
+    <script src="jquery-1.8.0.min.js"></script>
+    <script src="helper.js"></script>
+
+</head>
+<body>
+<style>
+    #mask-layer1{ position:fixed;left:0px;top:0px; z-index: 1; opacity: 0.8; width: 100%; height: 100%; background:#000; display: none;}
+    #box-layer1{position:absolute;left:40%;top:20%; z-index: 2; width: 200px; height: 200px; background:#FFF;display: none; text-align: center; padding: 10px;}
+</style>
+<ul>
+    <li>
+        <script>
+
+            $(function(){
+                //弹窗
+                var config={
+                    showBox: "box-layer1", //展示的id
+                    btnBox: "btn-layer1", //点击显示id
+                    maskBox: "mask-layer1",//弹窗遮罩id
+                    closeBox: "close1" //关闭id
+                };
+                helper.layer.layerShow(config);
+            })
+        </script>
+        弹出层插件：
+        <div id="box-layer1"><a href="javascript:" id="close1">X</a><br>this is show box!!!</div>
+        <input type="button" id="btn-layer1" value="show the box">
+    </li>
+    <li>
+        <script>
+
+            $(function(){
+                //公告
+                var config={
+                    bigBox: "notice", //最大的id
+                    listBox: "notice-list", //列表ID
+                    speed: "2"//滚动速度
+                };
+                helper.notice.noticeRoll(config);
+            })
+        </script>
+        滚动公告：
+        <style>
+            #notice{ width: 300px; height: 30px; overflow: hidden;}
+            #notice span{ display: block; float: left; width:20%;line-height: 30px;}
+            #notice #notice-list{ width: 80%;}
+            #notice #notice-list a{ display: block; width: 100%; }
+            #notic-number span{ display: inline-block; background: #CCC; margin: 5px; padding: 2px 5px; cursor: pointer;}
+            #notic-number span.cur{ background: #000000;color: white;}
+        </style>
+        <div id="notice">
+            <span>公告：</span><span id="notice-list">
+            <a href="#">111公告1滚动标题123123123</a>
+            <a href="#">222公告滚2动标题123123123</a>
+            <a href="#">333公告滚动3标题123123123</a>
+            <a href="#">444公告滚动标题123123123</a>
+        </span>
+        </div>
+        <div id="notic-number"></div>
+    </li>
+    <li>
+        <script>
+            //幻灯片
+           var config={
+               showBox: "slider1", //展示超出元素
+               listBox: "li",//以何种方式循环的
+               numberBox:"slider-number",//显示数字的元素，为空则不显示
+               number:true,//数字框是否显示数字
+               numberSon:"span:cur:out",//数字框输出格式：（span:输出元素、cur:选中class，out:离开class）
+               btnleft: "btn-left", //点击切换左边id
+               btnright: "btn-right",//点击切换右边id
+               transition: "", //关闭id
+               direction: "left",//显示方式（left：左右切换、top：上下切换）
+               speed: "5"//切换速度（单位：秒）
+            };
+            $(function(){
+                helper.slider.imgSlider(config);
+            })
+        </script>
+        幻灯片左右滚动：
+        <style>
+            .slider{ width: 100%; height: 300px; margin: 0 auto; overflow: hidden; position: relative; }
+            .slider a{ display: block; width: 50px; height: 100%; position: absolute; top: 0px;color: white;background: #CCCCCC;opacity: 0.4;cursor: pointer;}
+            .slider a:hover{opacity: 0.8;}
+            .slider #btn-left{ left: 0px;}
+            .slider #btn-right{ right:0px;}
+            .slider h2{ text-align: center; margin: 145px auto;}
+            .slider ul{ height: 100%; margin: 0px; padding: 0px; color: #FFFFFF;}
+            .slider li.green{ background: green;}
+            .slider li.red{ background: red;}
+            .slider li.darkred{ background:darkred;}
+            .slider li{ display:block; float: left; width:100%; height: 300px; background: #000000; margin: 0px; padding: 0px;}
+            #slider-number{ position: absolute; bottom: 10px; width: 100%; text-align: center;}
+            #slider-number span{ display: inline-block; background: #CCC; margin: 5px; padding: 2px 5px; cursor: pointer;}
+            #slider-number span.cur{ background: #000000;color: white;}
+        </style>
+
+        <div class="slider">
+
+            <a id="btn-left"></a>
+            <a id="btn-right"></a>
+            <ul id="slider1">
+                <li class="red"><h2>slide1</h2></li>
+                <li class="green"><h2>slide2</h2></li>
+                <li class="darkred"><h2>slide3</h2></li>
+            </ul>
+            <div id="slider-number"></div>
+        </div>
+    </li>
+    <li>
+        <script>
+            //幻灯片
+            var config2={
+                showBox: "slider2", //展示超出元素
+                numberBox:"slider-number2",//显示数字的元素，为空则不显示
+                btnleft: "btn-left2", //点击切换左边id
+                btnright: "btn-right2",//点击切换右边id
+                direction: "top"//显示方式（left：左右切换、top：上下切换）
+            };
+            $(function(){
+                helper.slider.imgSlider(config2);
+            })
+        </script>
+        幻灯片左右滚动：
+        <style>
+            .slider2{ width: 600px; height: 300px; margin: 0 auto; overflow: hidden; position: relative; }
+            .slider2 a{ display: block; width: 50px; height: 100%; position: absolute; top: 0px;color: white;background: #000000;opacity: 0.4;cursor: pointer;}
+            .slider2 a:hover{opacity: 0.8;}
+            .slider2 #btn-left2{ left: 0px;}
+            .slider2 #btn-right2{ right:0px;}
+            .slider2 h2{ text-align: center; margin: 145px auto;}
+            .slider2 ul{ height: 100%; margin: 0px; padding: 0px; color: #FFFFFF;}
+            .slider2 li.green{ background: blueviolet;}
+            .slider2 li.red{ background: blue;}
+            .slider2 li.darkred{ background:darkred;}
+            .slider2 li{ display:block; float: left; width:600px; height: 300px; background: #000000; margin: 0px; padding: 0px;}
+            #slider-number2{ position: absolute; bottom: 10px; width: 100%; text-align: center;}
+            #slider-number2 span{ display: inline-block; background: #CCC; margin: 5px; padding: 2px 5px; cursor: pointer;}
+            #slider-number2 span.cur{ background: #000000;color: white;}
+        </style>
+
+        <div class="slider2">
+
+            <a id="btn-left2"></a>
+            <a id="btn-right2"></a>
+            <ul id="slider2">
+                <li class="red"><h2>slide1</h2></li>
+                <li class="green"><h2>slide2</h2></li>
+                <li class="darkred"><h2>slide3</h2></li>
+            </ul>
+            <div id="slider-number2"></div>
+        </div>
+    </li>
+    <li>
+        <style>
+            #alertBox{ width: 300px; display: none; z-index: 500; text-align: center; border: 1px solid #CCCCCC; background: #F9F9F9; height: 120px; padding: 10px; margin: 0 auto; position: fixed; left: 50%; margin-left: -150px;  top: 50%; }
+        </style>
+        alert重写
+        <div id="alertBox">
+            <a href="#" class="alert_close">X</a>
+            <p id="alertMsg">这里是消息</p>
+            <p><input type="button" value="关闭" class="alert_close"/></p>
+        </div>
+        <input value="不一样的alert" type="button" onclick="helper.alert('O(∩_∩)O~')"/>
+    </li>
+</ul>
+
+</body>
+</html>
