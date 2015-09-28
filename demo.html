@@ -3,19 +3,17 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Helper--demo</title>
-    <script src="jquery-1.8.0.min.js"></script>
-    <script src="helper.js"></script>
-
+	<link id="bootstrap_221" rel="stylesheet" type="text/css" class="library" href="/js/sandbox/bootstrap-2.2.1/css/bootstrap.min.css">
+	<script id="jquery_172" type="text/javascript" class="library" src="/js/sandbox/jquery/jquery-1.7.2.min.js"></script>
 </head>
 <body>
 <style>
-    #mask-layer1{ position:fixed;left:0px;top:0px; z-index: 1; opacity: 0.8; width: 100%; height: 100%; background:#000; display: none;}
+    #mask-layer1{ position:absolute;left:0px;top:0px; z-index: 1; opacity: 0.8; width: 100%; height: 100%; background:#000; display: none;}
     #box-layer1{position:absolute;left:40%;top:20%; z-index: 2; width: 200px; height: 200px; background:#FFF;display: none; text-align: center; padding: 10px;}
 </style>
 <ul>
     <li>
         <script>
-
             $(function(){
                 //弹窗
                 var config={
@@ -24,16 +22,24 @@
                     maskBox: "mask-layer1",//弹窗遮罩id
                     closeBox: "close1" //关闭id
                 };
-                helper.layer.layerShow(config);
+                helper.layer(config);
             })
         </script>
-        弹出层插件：
+        弹出层提示插件：<br>
+			<p>
+        var config={<br>
+        showBox: "box-layer1", //展示的id<br>
+        btnBox: "btn-layer1", //点击显示id<br>
+        maskBox: "mask-layer1",//弹窗遮罩id<br>
+        closeBox: "close1" //关闭id<br>
+        };<br>
+        helper.layer(config);<br></p>
+        <div id="mask-layer1"></div>
         <div id="box-layer1"><a href="javascript:" id="close1">X</a><br>this is show box!!!</div>
         <input type="button" id="btn-layer1" value="show the box">
     </li>
     <li>
         <script>
-
             $(function(){
                 //公告
                 var config={
@@ -41,7 +47,7 @@
                     listBox: "notice-list", //列表ID
                     speed: "2"//滚动速度
                 };
-                helper.notice.noticeRoll(config);
+                helper.notice(config);
             })
         </script>
         滚动公告：
@@ -79,12 +85,12 @@
                speed: "5"//切换速度（单位：秒）
             };
             $(function(){
-                helper.slider.imgSlider(config);
+                helper.slider(config);
             })
         </script>
         幻灯片左右滚动：
         <style>
-            .slider{ width: 100%; height: 300px; margin: 0 auto; overflow: hidden; position: relative; }
+            .slider{ width: 600px; height: 300px; margin: 0 auto; overflow: hidden; position: relative; }
             .slider a{ display: block; width: 50px; height: 100%; position: absolute; top: 0px;color: white;background: #CCCCCC;opacity: 0.4;cursor: pointer;}
             .slider a:hover{opacity: 0.8;}
             .slider #btn-left{ left: 0px;}
@@ -94,14 +100,12 @@
             .slider li.green{ background: green;}
             .slider li.red{ background: red;}
             .slider li.darkred{ background:darkred;}
-            .slider li{ display:block; float: left; width:100%; height: 300px; background: #000000; margin: 0px; padding: 0px;}
+            .slider li{ display:block; float: left; width:600px; height: 300px; background: #000000; margin: 0px; padding: 0px;}
             #slider-number{ position: absolute; bottom: 10px; width: 100%; text-align: center;}
             #slider-number span{ display: inline-block; background: #CCC; margin: 5px; padding: 2px 5px; cursor: pointer;}
             #slider-number span.cur{ background: #000000;color: white;}
         </style>
-
         <div class="slider">
-
             <a id="btn-left"></a>
             <a id="btn-right"></a>
             <ul id="slider1">
@@ -123,7 +127,7 @@
                 direction: "top"//显示方式（left：左右切换、top：上下切换）
             };
             $(function(){
-                helper.slider.imgSlider(config2);
+                helper.slider(config2);
             })
         </script>
         幻灯片左右滚动：
@@ -143,9 +147,7 @@
             #slider-number2 span{ display: inline-block; background: #CCC; margin: 5px; padding: 2px 5px; cursor: pointer;}
             #slider-number2 span.cur{ background: #000000;color: white;}
         </style>
-
         <div class="slider2">
-
             <a id="btn-left2"></a>
             <a id="btn-right2"></a>
             <ul id="slider2">
@@ -156,19 +158,6 @@
             <div id="slider-number2"></div>
         </div>
     </li>
-    <li>
-        <style>
-            #alertBox{ width: 300px; display: none; z-index: 500; text-align: center; border: 1px solid #CCCCCC; background: #F9F9F9; height: 120px; padding: 10px; margin: 0 auto; position: fixed; left: 50%; margin-left: -150px;  top: 50%; }
-        </style>
-        alert重写
-        <div id="alertBox">
-            <a href="#" class="alert_close">X</a>
-            <p id="alertMsg">这里是消息</p>
-            <p><input type="button" value="关闭" class="alert_close"/></p>
-        </div>
-        <input value="不一样的alert" type="button" onclick="helper.alert('O(∩_∩)O~')"/>
-    </li>
 </ul>
-
 </body>
 </html>
