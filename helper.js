@@ -6,9 +6,7 @@
    var _$=function(){};
     _$.prototype= {
         //=====弹窗插件========
-        layer: {
-            //方法
-            layerShow: function (obj) {
+        layer:  function (obj) {
                 var dfconfig = {
                     showBox: "box-layer", //展示的id
                     btnBox: "btn-layer", //点击显示id
@@ -19,29 +17,22 @@
                 var objbox = getObjs(config.showBox);
                 var objbtn = getObjs(config.btnBox);
                 var objclose = getObjs(config.closeBox);
-                var objmask=checkDom(config.maskBox);
-
+                var objmask = getObjs(config.maskBox);
                 var arrobj = [objmask, objbox];
                 addEvent(objbtn, "click", function () {
                     var i = 0;
                     while (i in arrobj) {
-                        arrobj[i].style.display = "block";
-                        //checkState.call(arrobj[i], 'display', 'block') ? arrobj[i].style.display = "none" : arrobj[i].style.display = "block";
+                        checkState.call(arrobj[i], 'display', 'block') ? arrobj[i].style.display = "none" : arrobj[i].style.display = "block";
                         i++;
                     }
                 });
                 addEvent(objclose, "click", function () {
                     objmask.style.display = "none";
                     objbox.style.display = "none"
-
                 });
-
-            }
         },
         //=========公告插件==========
-        notice: {
-            //方法
-            noticeRoll: function (obj) {
+        notice:  function (obj) {
                 var dfconfig = {
                     bigBox: "notice", //最大的id
                     listBox: "notice-list", //列表ID
@@ -77,7 +68,6 @@
                        setnotic(noticNow++);
                    }, config.speed * 1000);
                 });
-               // _timer;
                 //核心方法
                 function setnotic() {
                     //获取单行的高度
@@ -86,11 +76,9 @@
                     $(listbox).animate({marginTop: -(noticNow * _o) + "px"});
                     setCur(sonNumber, noticNow, out);
                 }
-            }
         },
         //=========幻灯片插件========
-        slider: {
-            imgSlider: function (obj) {
+        slider:function (obj) {
                 //配置
                 var dfconfig = {
                     showBox: "slider1", //展示超出元素
@@ -113,22 +101,23 @@
                 var out = config.numberSon.split('\:');
                 var timerfn = function () {
                 };
+                var _time;
                 var sonNumber; //拥有数字的元素个数
                 var slidNow = 0;
+                //总宽度
+                var _wlist = ~~(sonBox.length * showBox.parentElement.offsetWidth);
+                showBox.style.width = _wlist + "px";
+                showBox.style.marginLeft="0px";
+                var _o =$(sonBox).width(showBox.parentElement.offsetWidth)[0].offsetWidth;
                 //先获取li个数并设置ul宽度
                 var _slidtion = {
                     //-----左右滚动--------
                     left: function () {
-                        //获取单个块的宽度
-                        var _o = sonBox[0].offsetWidth;
-                        $(sonBox).width(_o);
-                        //总宽度
-                        var _wlist = ~~(sonBox.length * sonBox[0].offsetWidth);
-                        showBox.style.width = _wlist + "px";
-
                         timerfn = function () {
+                            //获取单个块的宽度
                             var _s = sonBox.length - 1;
                             slidNow = slidNow < 0 ? _s : slidNow > _s ? 0 : slidNow;
+                            _o=showBox.parentElement.offsetWidth;
                             var _m = _o * slidNow;
                             //滚动
                             if (_wlist <= _m) {
@@ -141,12 +130,13 @@
                     },
                     //-------上下滚动--------
                     top: function () {
-                        //获取单个块的高度
-                        var _o = sonBox[0].offsetHeight;
                         //总宽度
-                        var _wlist = ~~(sonBox.length * sonBox[0].offsetHeight);
+                        var _wlist = ~~(sonBox.length * showBox.parentElement.offsetHeight);
                         showBox.style.width = _wlist + "px";
+                        showBox.style.marginTop="0px";
                         timerfn = function () {
+                            //获取单个块的高度
+                            var _o =$(sonBox).height(showBox.parentElement.offsetHeight)[0].offsetHeight;
                             var _s = sonBox.length - 1;
                             slidNow = slidNow < 0 ? _s : slidNow > _s ? 0 : slidNow;
                             var _m = _o * slidNow;
@@ -163,12 +153,12 @@
                 //判断展示方式
                 _slidtion[config.direction]();
                 //切换效果公共方法
-                timerfn.prototype.mySetcur = function () {
+               timerfn.prototype.mySetcur = function () {
                     setCur(sonNumber, slidNow, out);
                 };
-
                 //是否输出数量
                 if (numberBox !== false) {
+                    numberBox.innerHTML="";
                     sonNumber = outNumber(numberBox, out, config.number, sonBox.length, slidNow, 'silder-num', function (n) {
                         new timerfn(slidNow = n).mySetcur();
                     });
@@ -183,63 +173,34 @@
                     new timerfn(slidNow).mySetcur();
                 });
                 //走你
-                timer(function () {
+               _time=timer(function () {
+                   _time=0;
                     new timerfn(slidNow++).mySetcur();
                 }, config.speed * 1000);
-            }
-        },
-        //=========重写alert=========
-        alert:function(msg){
-            //配置
-            var dfconfig = {
-                showBox: "alertBox", //展示超出元素
-                msgBox: "alertMsg",
-                clsClose:"alert_close",
-                maskBox: "mask-layer1"//弹窗遮罩class
-            };
-            var config = typeof obj === "undefined" ? dfconfig : $.extend(dfconfig, obj);
-            var showBox = getObjs(config.showBox);
-            var msgBox = getObjs(config.msgBox);
-            var objmask=checkDom(config.maskBox);
-            showBox.style.display="block";
-            objmask.style.display="block";
-            msgBox.innerHTML=msg;
-            $("."+config.clsClose).bind("click",function(){
-                showBox.style.display="none";
-                objmask.style.display="none";
-            })
         }
     };
     //暴露给全局
     global.helper = new _$();
-    function checkDom(tagID){
-        var tag=getObjs(tagID);
-        if(tag==="undefined"){
-            var _dom=document.createElement("div");
-            _dom.id=tagID;
-            document.body.appendChild(_dom);
-            tag=_dom;
-        }
-        return tag;
-    }
     //输出数字控制 obj目标输出，type输出类型 num输出个数 bl是否显示数字 glob全局统计
-    function outNumber(obj,type,bl,num,glob,attr,fn){
-        var i= 0,html;
-        var out=type||[];
-        for(;i<num;i++){
-            html=document.createElement(out[0]);
-            bl==true?html.innerHTML=i+1:"";
-            i===0?html.className=out[1]:"";
-            html.setAttribute(attr,i);
-            //绑定事件
-            addEvent(html,"click",function(){
-                glob=this.getAttribute(attr);
-                fn(glob);
-            });
-            obj.appendChild(html);
+    function outNumber(obj,type,bl,num,glob,attr,fn) {
+            var i = 0, html;
+            var out = type || [];
+            for (; i < num; i++) {
+                html = document.createElement(out[0]);
+                bl == true ? html.innerHTML = i + 1 : "";
+                i === 0 ? html.className = out[1] : "";
+                html.setAttribute(attr, i);
+                obj.appendChild(html);
+                //绑定事件
+                addEvent(html, "click", function () {
+                    glob = this.getAttribute(attr);
+                    fn(glob);
+                });
+
+            }
+            return getObjs_dom(obj, out[0]);
         }
-        return getObjs_dom(obj, out[0]);
-    }
+
     //设置样式
     function setCur(numobj,glob,arry){
         //当前选中Class设置
@@ -260,7 +221,9 @@
                 if(_obj[_i].addEventListener){
                     _obj[_i].addEventListener(type,handler,false)
                 }else{
-                    _obj[_i].attachEvent("on"+type,handler);
+                    _obj[_i].attachEvent("on"+type,function(){
+                         handler.call(_obj[_i]);
+                    });
                 }
             }(i)
         }
@@ -272,7 +235,7 @@
     }
     //获取指定的ID
     function getObjs(id){
-        return document.getElementById(id)||'undefined';
+        return document.getElementById(id);
     }
     //获取节点
     function getObjs_dom(docmt,div){
